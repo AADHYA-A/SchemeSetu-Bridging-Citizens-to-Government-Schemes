@@ -6,7 +6,7 @@ A bilingual (English / हिन्दी) full-stack web app that tells people 
 
 Built for **VORTEX 2K26 – Global AI Innovation Hackathon** · Theme: **AI for Bharat & Public Services**
 
-[**Live Demo**](https://claude.ai/artifact/HHxWiBs8WJWjcemniAwwyi) · [Problem](#-the-problem) · [Features](#-features) · [Architecture](#-architecture) · [Run Locally](#-run-locally) · [API](#-api-reference) · [Roadmap](#-roadmap)
+[**Live Demo**](https://scheme-setu-bridging-citizens-to-go.vercel.app/) · [Problem](#-the-problem) · [Features](#-features) · [Architecture](#-architecture) · [Run Locally](#-run-locally) · [API](#-api-reference) · [Roadmap](#-roadmap)
 
 ---
 
