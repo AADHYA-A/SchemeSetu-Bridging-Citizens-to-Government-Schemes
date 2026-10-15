@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SchemeSetu – Find Government Schemes You Qualify For</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#14213d;--mu:#5b6478;--ac:#e8590c;--ac2:#2b8a3e;--bd:#e2e5ee;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1420;--card:#192033;--tx:#eef1f8;--mu:#9aa4bb;--ac:#ff8a4c;--ac2:#51cf66;--bd:#2a3350;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1420;--card:#192033;--tx:#eef1f8;--mu:#9aa4bb;--ac:#ff8a4c;--ac2:#51cf66;--bd:#2a3350;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;line-height:1.5}
+.w{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:1.6rem;margin:0}h1 span{color:var(--ac)}
+.sub{color:var(--mu);margin:4px 0 18px}
+button{font:inherit;cursor:pointer}
+.lang{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:6px 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:block;font-size:.85rem;color:var(--mu);margin-bottom:4px}
+input,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit}
+.go{width:100%;margin-top:14px;padding:13px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-weight:700;font-size:1rem}
+.res h3{margin:0 0 4px;font-size:1.05rem}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--ac2) 18%,transparent);color:var(--ac2);margin-bottom:6px}
+.ben{font-weight:600;color:var(--ac2);margin:4px 0}
+.mu{color:var(--mu);font-size:.88rem}
+.sum{font-weight:700;margin:16px 0 10px}
+.note{font-size:.78rem;color:var(--mu);margin-top:18px}
+a{color:var(--ac)}
+</style>
+</head>
+<body>
+<div class="w">
+<header><h1>Scheme<span>Setu</span> 🌉</h1><button class="lang" id="lb" onclick="tg()">हिन्दी</button></header>
+<p class="sub" id="sub"></p>
+<div class="card"><div class="g">
+<div><label id="l_age"></label><input id="age" type="number" min="0" max="110" value="30"></div>
+<div><label id="l_inc"></label><input id="inc" type="number" min="0" step="0.1" value="2"></div>
+<div><label id="l_gen"></label><select id="gen"></select></div>
+<div><label id="l_occ"></label><select id="occ"></select></div>
+<div><label id="l_cat"></label><select id="cat"></select></div>
+<div><label id="l_bank"></label><select id="bank"></select></div>
+<div><label id="l_house"></label><select id="house"></select></div>
+<div><label id="l_girl"></label><select id="girl"></select></div>
+</div><button class="go" id="go" onclick="run()"></button></div>
+<div id="out" class="res"></div>
+<p class="note" id="note"></p>
+</div>
+<script>
+var L='en';
+var T={
+en:{sub:"Answer 8 quick questions. Instantly see central government schemes you may qualify for, benefits, and documents to carry.",age:"Age",inc:"Annual household income (₹ lakh)",gen:"Gender",occ:"Occupation",cat:"Category",bank:"Has a bank account?",house:"Owns a pucca (permanent) house?",girl:"Has a girl child under 10?",go:"Find my schemes",lb:"हिन्दी",docs:"Documents",found:function(n){return n+" scheme(s) you likely qualify for"},none:"No matches found. Try adjusting details, or visit your nearest CSC / Gram Panchayat.",badge:"Likely eligible",note:"Indicative only. Actual eligibility depends on official guidelines, state rules and verification. Confirm at myscheme.gov.in or your nearest Common Service Centre. Nothing entered here is stored or sent anywhere.",
+ g:["Female","Male","Other"],o:["Farmer","Artisan / craftsperson","Student","Unorganised worker","Salaried","Business owner","Homemaker"],c:["General","OBC","SC","ST"],y:["Yes","No"]},
+hi:{sub:"8 आसान सवालों के जवाब दें। जानें कौन सी केंद्र सरकार की योजनाओं के आप पात्र हो सकते हैं, लाभ और ज़रूरी दस्तावेज़।",age:"आयु",inc:"वार्षिक पारिवारिक आय (₹ लाख)",gen:"लिंग",occ:"व्यवसाय",cat:"श्रेणी",bank:"क्या बैंक खाता है?",house:"क्या पक्का मकान है?",girl:"क्या 10 साल से कम की बेटी है?",go:"मेरी योजनाएँ खोजें",lb:"English",docs:"दस्तावेज़",found:function(n){return "आप संभवतः "+n+" योजना(ओं) के पात्र हैं"},none:"कोई योजना नहीं मिली। जानकारी बदलकर देखें या नज़दीकी CSC / ग्राम पंचायत जाएँ।",badge:"संभावित पात्र",note:"यह केवल सांकेतिक है। वास्तविक पात्रता आधिकारिक दिशानिर्देशों, राज्य नियमों और सत्यापन पर निर्भर है। myscheme.gov.in या नज़दीकी कॉमन सर्विस सेंटर पर पुष्टि करें। यहाँ दी गई जानकारी कहीं सहेजी या भेजी नहीं जाती।",
+ g:["महिला","पुरुष","अन्य"],o:["किसान","कारीगर / शिल्पकार","विद्यार्थी","असंगठित श्रमिक","वेतनभोगी","व्यवसायी","गृहिणी"],c:["सामान्य","ओबीसी","एससी","एसटी"],y:["हाँ","नहीं"]}
+};
+var OV=["farmer","artisan","student","unorg","salaried","business","homemaker"];
+function fill(id,arr,vals){var s=document.getElementById(id),v=s.value;s.innerHTML=arr.map(function(x,i){return '<option value="'+vals[i]+'">'+x+'</option>'}).join('');if(v)s.value=v}
+function ui(){var t=T[L];document.documentElement.lang=L;
+["sub","go","note"].forEach(function(k){document.getElementById(k).textContent=t[k]});
+["age","inc","gen","occ","cat","bank","house","girl"].forEach(function(k){document.getElementById("l_"+k).textContent=t[k]});
+document.getElementById("lb").textContent=t.lb;
+fill("gen",t.g,["f","m","o"]);fill("occ",t.o,OV);fill("cat",t.c,["General","OBC","SC","ST"]);
+["bank","house","girl"].forEach(function(k){fill(k,t.y,["1","0"])});
+if(!ui.i){document.getElementById("bank").value="1";document.getElementById("house").value="0";document.getElementById("girl").value="0";ui.i=1}}
+function tg(){L=L=="en"?"hi":"en";ui();if(run.d)run()}
+async function run(){run.d=1;var g=function(i){return document.getElementById(i).value};
+var p={age:+g("age"),inc:+g("inc"),gen:g("gen"),occ:g("occ"),cat:g("cat"),bank:g("bank")=="1",house:g("house")=="1",girl:g("girl")=="1"};
+var i=L=="en"?0:1,t=T[L],o=document.getElementById("out"),m;
+try{var r=await fetch("/api/match",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});if(!r.ok)throw 0;m=(await r.json()).matches}
+catch(e){o.innerHTML='<div class="sum">'+(L=="en"?"Could not reach the server. Please try again.":"सर्वर से संपर्क नहीं हो सका। कृपया पुनः प्रयास करें।")+'</div>';return}
+var h='<div class="sum">'+(m.length?t.found(m.length):t.none)+'</div>';
+m.forEach(function(s){h+='<div class="card"><span class="badge">'+t.badge+'</span><h3>'+s.n[i]+'</h3><div class="ben">'+s.b[i]+'</div><div class="mu">📄 '+t.docs+': '+s.d[i]+'</div></div>'});
+o.innerHTML=h;o.scrollIntoView({behavior:"smooth"})}
+ui();
+</script>
+</body>
+</html>
